@@ -18,8 +18,8 @@
                         <form>
                             <div class="form-row align-items-center">
                                 <div class="col">
-                                    <input type="search" wire:model.defer="search" class="form-control mb-2"
-                                        id="inlineFormInput" placeholder="Jane Doe">
+                                <input type="search" wire:model="search" class="form-control mb-2"
+                                        id="inlineFormInput" placeholder="Search">
                                 </div>
                                 <div class="col" wire:loading>
                                     <div class="spinner-border" role="status">
@@ -43,6 +43,7 @@
                             <th scope="col">#Id</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Role</th>
                             <th scope="col">Manage</th>
                         </tr>
                     </thead>
@@ -52,6 +53,8 @@
                                 <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->role->name }}</td>
+
                                 <td>
                                     <button wire:click="showEditModal({{ $user->id }})"
                                         class="btn btn-success">Edit</button>
@@ -150,6 +153,32 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label for="roleId"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
+
+                                <div class="col-md-6">
+                                    <select wire:model.defer="roleId" class="custom-select">
+                                        <option selected>Choose</option>
+
+                                        @foreach (App\Models\Role::all() as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('roleId')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>  
+
+                            
+
+                       
+                            
+
                             @if (!$editMode)
                                 <div class="form-group row">
                                     <label for="password"
@@ -167,6 +196,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                
                             @endif
 
                         </form>

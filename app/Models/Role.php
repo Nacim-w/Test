@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Role extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['name'];
-
-    public function employees()
+    protected $fillable = [
+        'name'
+    ];
+    public function users()
     {
-        return $this->hasMany(Employee::class);
+        return $this->hasMany(User::class);
     }
+ 
 }

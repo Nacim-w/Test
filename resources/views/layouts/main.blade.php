@@ -33,7 +33,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -42,8 +42,8 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('employees.index') }}">
-                    <span>Employee Management</span></a>
+                <a class="nav-link" href="{{ route('dashboard') }}">
+                    <span>Users Management</span></a>
             </li>
 
             <!-- Divider -->
@@ -54,14 +54,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSystem"
                     aria-expanded="true" aria-controls="collapseSystem">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>System Management</span>
+                    <span>Users</span>
                 </a>
                 <div id="collapseSystem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('countries.index') }}">Country</a>
-                        <a class="collapse-item" href="{{ route('states.index') }}">State</a>
-                        <a class="collapse-item" href="{{ route('cities.index') }}">City</a>
-                        <a class="collapse-item" href="{{ route('departments.index') }}">Department</a>
+                        <a class="collapse-item" href="{{ route('users.index') }}">Users list</a>
                     </div>
                 </div>
             </li>
@@ -73,13 +70,11 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
                     aria-expanded="true" aria-controls="collapseUser">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Users Management</span>
+                    <span>Roles</span>
                 </a>
                 <div id="collapseUser" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('users.index') }}">Users</a>
-                        <a class="collapse-item" href="cards.html">Role</a>
-                        <a class="collapse-item" href="cards.html">Permission</a>
+                        <a class="collapse-item" href="{{ route('roles.index') }}">Roles list</a>
                     </div>
                 </div>
             </li>

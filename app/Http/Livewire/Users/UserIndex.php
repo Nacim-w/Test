@@ -19,6 +19,7 @@ class UserIndex extends Component
     public $email;
     public $password;
     public $userId;
+    public $roleId;
     public $editMode =false;
     protected $rules = [
         'username' => 'required',
@@ -26,6 +27,7 @@ class UserIndex extends Component
         'lastName' => 'required',
         'password' => 'required',
         'email' => 'required|email',
+        'roleId' => 'required',
     ];
     public function storeUser()
     {
@@ -37,6 +39,8 @@ class UserIndex extends Component
            'last_name' =>  $this->lastName,
            'email' =>  $this->email,
            'password' =>  Hash::make($this->password),
+           'role_id' => $this->roleId,
+
        ]);
         $this->reset();
         $this->dispatchBrowserEvent('modal', ['modalId' => '#userModal', 'actionModal' => 'hide']);
@@ -66,6 +70,8 @@ class UserIndex extends Component
         $this->firstName = $user->first_name;
         $this->lastName = $user->last_name;
         $this->email = $user->email;
+        $this->roleId = $user->role_id;
+
     }
 
     public function updateUser()
@@ -75,6 +81,8 @@ class UserIndex extends Component
         'firstName' => 'required',
         'lastName' => 'required',
         'email' => 'required|email',
+        'roleId' => 'required',
+
         ]);
         $user = User::find($this->userId);
         $user->update($validated);
@@ -86,6 +94,10 @@ class UserIndex extends Component
     public function deleteUser($id)
     {
         $user = User::find($id);
+	if(auth()->user()->id==$user->id){
+            session()->flash('user-message', 'You Cannot Delete Yourself');
+            return redirect()->route('users.index');
+        }
         $user->delete();
 
         session()->flash('user-message', 'User successfully deleted');
@@ -98,10 +110,11 @@ class UserIndex extends Component
     }
 
     public function render()
-    {
+    {  
+        
         $users = User::paginate(5);
         if (strlen($this->search) > 2) {
-            $users = User::where('username', 'like', "%{$this->search}%")->paginate(5);
+            $users = User::where('username', 'like', "%{$this->search}%")->orwhere('username', 'like', "%{$this->search}%")->paginate(5);
         }
         return view('livewire.users.user-index', [
             'users' => $users
